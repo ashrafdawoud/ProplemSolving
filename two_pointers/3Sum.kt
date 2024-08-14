@@ -50,7 +50,7 @@ object ThreeSum {
         for (i in sortedArray.indices) {
             /**
              * if (i > 0 && sortedArray[i] == sortedArray[i - 1]) continue
-             * we need this condition so if array have duplicated items we will skip them
+             * we need this condition so if array have duplicated base items we will skip them
              * as the same operation will run on it
              *
              * [-4, -1, -1, 0, 1, 2]
@@ -71,12 +71,25 @@ object ThreeSum {
                 when {
                     sum == 0 -> {
                         result.add(listOf(sortedArray[i], sortedArray[startIndex], sortedArray[endIndex]))
+                        /**
+                         * we need this condition so if array have duplicated startIndex items we will skip them
+                         * */
                         while (startIndex < endIndex && sortedArray[startIndex] == sortedArray[startIndex + 1]) startIndex++
+                        /**
+                         * we need this condition so if array have duplicated endIndex items we will skip them
+                         * */
                         while (startIndex < endIndex && sortedArray[endIndex] == sortedArray[endIndex - 1]) endIndex--
+                        /**
+                         * after these checks we add i to startIndex and delete 1 from endIndex
+                         * so we can apply these operation on another two items
+                         * */
                         endIndex--
                         startIndex++
                     }
-
+                    /**
+                     * if sum is bigger than zero so we will Subtract endIndex by 1
+                     * as this is sorted array and we want to try with smaller value
+                     * */
                     sum > 0 -> endIndex--
                     else -> startIndex++
                 }
